@@ -13,7 +13,7 @@ int main()
 
     cout << "Wordle" << endl;
     
-    while (tries < 5 && !guessed_correctly)
+    while (tries < 6 && !guessed_correctly)
     {
         cout << "Enter a five letter word: ";
         cin >> guess;
