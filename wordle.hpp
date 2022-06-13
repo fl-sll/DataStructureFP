@@ -1,106 +1,70 @@
 #include <iostream>
-#include <string.h>
+#include <string>
 #include <fstream>
-#include <sstream>
-#include <cstring>
 #include <vector>
-#include <algorithm>
-#include <windows.h>
 
-#define RESET "\u001B[0m";
-#define YELLOW = "\u001B[33m";
-#define GREEN = "\u001B[32m";
+using namespace std;
 
-class Wordle 
+string getRandomWord(string file)
 {
-    public:
-        //! functions
-        std::string ReturnRandomWord(std::string filename);
-        bool PrintWordWithColor(char inputword [5], char correctword [5]);
-};
-
-std::string Wordle::ReturnRandomWord(std::string filename)
-{
-    std::string word, line;
-    int selectline;
-    int max;
-
-    max = 5757;
-
-    std::ifstream fin(filename.c_str());
+    ifstream in(file);
+    vector<string> words;
+    string word;
 
     srand(time(0));
 
-    int i = 1;
-    while (getline(fin, line))
+    while (in >> word)
     {
-        if(i == (rand()%max)){
-            std::istringstream ss(line);
-            for (int j=0; j<4; j++){
-                ss >> word;
-            }
-            break;
-        }
-        i++;
+        words.push_back(word);
     }
 
-    return word;
+    return words[rand() % words.size()];
 }
 
-bool Wordle::PrintWordWithColor(char inputword [5], char correctword [5])
+bool validateAnswer(string answer, string guess)
 {
-    bool correct = true;
-    char answertemp [5];
-    char word[100];
+    vector<char> clue = {'-', '-', '-', '-', '-'};
+    string clues;
+    vector<bool> flags = {false, false, false, false, false};
 
-    for (int i = 0; i < 5; i++) 
+    for (int i = 0; i < 5; i++)
     {
-        answertemp[i] = correctword[i];
-    }
-
-    int colorforletter [5];
-
-    for (int i = 0; i < 5; i++) 
-    {
-        if (inputword[i] == answertemp[i])
+        if (guess[i] == answer[i])
         {
-            answertemp[i] = '-';
-            colorforletter[i] = 2;
-        }
-        else 
-        {
-            correct = false;
+            clue[i] = 'G';
+            flags[i] = true;
         }
     }
 
-    for (int j = 0; j < 5; j++)
+    for (int i = 0; i < 5; i++)
     {
-        for (int x = 0; x < 5; x++)
+        if (clue[i] == '-')
         {
-            if (inputword[j] == answertemp[x] && colorforletter[j] != 2)
+            for (int j = 0; j < 5; j++)
             {
-                colorforletter[j] = 1;
-                answertemp[j] = 1;
+                if (guess[i] == answer[j] && !flags[j])
+                {
+                    clue[i] = 'Y';
+                    flags[j] = true;
+                    break;
+                }
             }
         }
     }
-
-    for (int m = 0; m < 5; m++)
+    
+    for (int i = 0; i < 5; i++)
     {
-        if (colorforletter[m] == 0)
-        {
-            std::cout << '_';
-        } 
-        else if (colorforletter[m] == 1)
-        {
-            std::cout << "Y";
-        }
-        else if (colorforletter[m] == 2)
-        {
-            std::cout << "G";
-        }
+        clues.push_back(clue[i]);
     }
 
-    std::cout << std::endl;
-    return correct;
+    cout << clues << endl;
+
+    if (clues == "GGGGG")
+    {
+        return true;
+    }
+    else 
+    {
+        return false;
+    }
 }

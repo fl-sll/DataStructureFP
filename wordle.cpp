@@ -1,38 +1,39 @@
-#include "./wordle.hpp"
+#include <iostream>
 #include <string>
-#include <algorithm>
+#include "./wordle.hpp"
+
+using namespace std;
 
 int main()
 {
+    string guess;
     int tries = 0;
-    Wordle wordle;
-    std::cout << "Wordle: Type a five letter word" << std::endl;
-    std::string answerChosen = wordle.ReturnRandomWord("words.txt");
-    char answer[5];
-    for (int i = 0; i < 5; i++)
-    {
-        answer[i] = answerChosen[i];
-    }
-    char input[5];
-    bool finish = false;
+    bool guessed_correctly = false;
+    string answer = getRandomWord("words.txt");
 
-    while (!finish)
+    cout << "Wordle" << endl;
+    
+    while (tries < 5 && !guessed_correctly)
     {
-        tries++;
-        std::string in;
-        std::cin >> in;
-        std::transform(in.begin(), in.end(), in.begin(), ::toupper);
-
-        for (int i = 0; i < 5; i++) 
-        {
-            answer[i] = answerChosen[i];
-            input[i] = in[i];
+        cout << "Enter a five letter word: ";
+        cin >> guess;
+        if (guess.length() == 5){
+            guessed_correctly = validateAnswer(answer, guess);
+            tries++;
         }
-        if (wordle.PrintWordWithColor(input, answer))
+        else
         {
-            finish = true;
+            cout << "Word must be 5 letters. Try Again: ";
+            cin >> guess;
         }
     }
 
-    std::cout << "You found the answer in " << tries << " tries. Great Job!!!";
+    if (guessed_correctly)
+    {
+        cout << "Congratulations. You guessed " << answer << " correctly in " << tries << " tries." << endl;
+    }
+    else
+    {
+        cout << "You have used up all of your guesses. The correct answer is " << answer << "." << endl;
+    }
 }
