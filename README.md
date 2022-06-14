@@ -16,4 +16,4 @@ After a successful guess or 6 unsuccessful tries, you will see a message.
 To try and play, download all the files including the words.txt
 Once thats done, run the wordle.cpp using the terminal or your favourite IDE.
 
-## Thank you for trying and enjoy the game!!!
+###Thank you for trying and enjoy the game!!!
