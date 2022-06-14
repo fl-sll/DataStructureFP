@@ -1,8 +1,8 @@
 # Data structure Final Project
 ## Group 6: 
-    - Edward Alvin Koesmanto (2501963141) </li>
-    - Jairo Nathanael Immanuel Siegers (2502042971) </li>
-    - Galih Kamulyan Gumilar Mangunharja (2201807772) </li>
+- Edward Alvin Koesmanto (2501963141) </li>
+- Jairo Nathanael Immanuel Siegers (2502042971) </li>
+- Galih Kamulyan Gumilar Mangunharja (2201807772) </li>
 
 ## Description
 Wordle was created by software engineer and former Reddit employee, Josh Wardle, and was launched in October 2021.
