@@ -2,6 +2,9 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <windows.h>
+
+#define RESET "\033[0m"
 
 using namespace std;
 
@@ -19,6 +22,11 @@ string getRandomWord(string file)
     }
 
     return words[rand() % words.size()];
+}
+
+void changeColor(int desiredColor)
+{
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), desiredColor);
 }
 
 bool validateAnswer(string answer, string guess)
@@ -57,7 +65,24 @@ bool validateAnswer(string answer, string guess)
         clues.push_back(clue[i]);
     }
 
-    cout << clues << endl;
+    for (int i = 0; i < 5; i++)
+    {
+        if (clues[i] == 'G')
+        {
+            changeColor(10);
+            cout << guess[i] << RESET;
+        }
+        else if (clues[i] == 'Y')
+        {
+            changeColor(14);
+            cout << guess[i] << RESET;
+        }
+        else
+        {
+            cout << RESET << guess[i];
+        }
+    }
+    cout << endl;
 
     if (clues == "GGGGG")
     {
