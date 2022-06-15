@@ -24,6 +24,29 @@ string getRandomWord(string file)
     return words[rand() % words.size()];
 }
 
+bool checkWord(string file, string guess)
+{
+    ifstream in(file);
+    vector<string> words;
+    string word;
+    bool check = false;
+    int i = 0;
+
+    while (in >> word)
+    {
+        words.push_back(word);
+    }
+
+    for (int i = 0; i < words.size(); i++)
+    {
+        if (guess == words[i])
+        {
+            check = true;
+        }
+    }
+    return check;
+}
+
 void changeColor(int desiredColor)
 {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), desiredColor);
@@ -82,7 +105,7 @@ bool validateAnswer(string answer, string guess)
             cout << RESET << guess[i];
         }
     }
-    cout << endl;
+    cout << " ";
 
     if (clues == "GGGGG")
     {

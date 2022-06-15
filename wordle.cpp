@@ -8,6 +8,7 @@ int main()
 {
     string guess;
     int tries = 0;
+    int guesses = 6;
     bool guessed_correctly = false;
     string answer = getRandomWord("words.txt");
 
@@ -17,15 +18,18 @@ int main()
     {
         cout << "Enter a five letter word: ";
         cin >> guess;
-        if (guess.length() == 5){
-            guessed_correctly = validateAnswer(answer, guess);
-            tries++;
-        }
-        else
-        {
+        while (guess.length() != 5){
             cout << "Word must be 5 letters. Try Again: ";
             cin >> guess;
         }
+        while (checkWord("words.txt", guess) == false){
+            cout << "Word is not in dictionary. Try again: ";
+            cin >> guess;
+        }
+        guessed_correctly = validateAnswer(answer, guess);
+        tries++;
+        guesses--;
+        cout << "Tries left: " << guesses << endl;
     }
 
     if (guessed_correctly)
