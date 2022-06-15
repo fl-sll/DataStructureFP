@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <time.h>
 #include <windows.h>
 
 #define RESET "\033[0m"
